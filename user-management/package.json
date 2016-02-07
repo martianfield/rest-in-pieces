@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "nodemon server.js"
   },
   "author": "Martin Imfeld <martin.imfeld@gmail.com> (http://martianfield.github.io/)",
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "nodemon": "^1.8.1"
   },
   "dependencies": {
     "express": "^4.13.4",
     "iceworm": "^0.5.9",
-    "mongodb": "^2.1.6"
+    "mongodb": "^2.1.6",
+    "snowflea": "^0.3.0"
   }
 }
