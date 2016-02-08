@@ -20,6 +20,6 @@
     "jsonwebtoken": "^5.5.4",
     "mongodb": "^2.1.6",
     "setthings": "^0.2.0",
-    "snowflea": "^0.3.0"
+    "snowflea": "^0.3.1"
   }
 }
