@@ -1,8 +1,8 @@
-const entities = require(__dirname + '/../entities/entities')
+const DA = require(__dirname + '/../data_access/DA')
 const router = require('express').Router()
 
 router.get('/', (req, res) => {
-  entities.daos["users"].all()
+  DA.O["users"].all()
     .then(docs => {
       console.log("success: received user docs")
       res.send(docs)

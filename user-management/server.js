@@ -4,7 +4,7 @@ const port = process.env.PORT || 8080
 const set = require('setthings').set
 const settings = require('setthings').settings
 const MongoClient = require('mongodb').MongoClient
-const entities = require(__dirname + '/entities/entities')
+const DA = require(__dirname + '/data_access/DA')
 
 // settings
 set('mongo.uri', 'mongodb://localhost:27017/restinpieces')
@@ -16,7 +16,7 @@ MongoClient.connect(settings.mongo.uri)
     console.log("successfully connected to mongo db")
     // initialize data access objects
     console.log("initializing data access objects")
-    entities.init(db)
+    DA.init(db)
     // set up routes
     app.use('/users/', require(__dirname + '/routers/users'))
   })

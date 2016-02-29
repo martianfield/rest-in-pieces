@@ -1,11 +1,11 @@
 'use strict'
 
 const UsersDAO = require(__dirname + '/users.js').UsersDAO
-const daos = {}
+const objects = {}
 
 const init = (db) => {
-  daos['users'] = new UsersDAO(db)
+  objects['users'] = new UsersDAO(db)
 }
 
 module.exports.init = init
-module.exports.daos = daos
+module.exports.O = objects
