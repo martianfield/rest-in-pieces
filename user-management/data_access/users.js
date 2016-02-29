@@ -19,7 +19,6 @@ function UsersDAO(database) {
     return this.db.collection('users').find({}).toArray()
   }
 
-
 }
 
 module.exports.UsersDAO = UsersDAO
