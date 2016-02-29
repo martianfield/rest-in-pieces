@@ -6,21 +6,26 @@ const snowflea = require('snowflea')
 const jwt = require('jsonwebtoken')
 const settings = require('setthings').settings
 const helper = require(__dirname + '/../lib/helper')
-const user_schema = require(__dirname + '/users').schema
 
 // the schema
 let schema = new Schema(
   {
-    name: '*string',
-    description: '*string'
+    username: '*string',
+    id: '*string',
+    auth_service: '*string',
+    auth_id: '*string',
+    roles: 'string[]',
+    email: 'email'
   },
   {
-    collection:'exercises',
+    collection:'users',
     access: {
-      'read':['user']
+      'read':['admin'],
+      'write':['admin']
     }
   }
 )
+
 
 const user_admin = "facebook.56b7b2c3e4cf56e928ebe7cb"
 const user_normal = "google.56b7b2c3e4cf56e928ebe7cb"
@@ -29,7 +34,8 @@ const user_current = user_admin
 
 // the router
 router.get('/', (req, res) => {
-  snowflea.read({"id":user_current}, user_schema)
+  // user_schema.read({"id":user_current})
+  snowflea.read({"id":user_current}, schema)
     .then((result) => {
       // TODO check if the user exists
       let user = result[0]
@@ -39,10 +45,12 @@ router.get('/', (req, res) => {
       if(!hasAccess) {
         throw new Error("no access")
       }
+      console.log("hello")
       // get users
       return snowflea.read({}, schema)
     })
     .then(result => {
+      addTokens(result)
       res.status(200).json(result)
     })
     .catch((err) => {
@@ -52,3 +60,25 @@ router.get('/', (req, res) => {
 })
 
 module.exports.router = router
+module.exports.schema = schema
+
+function addTokens(users) {
+  users.forEach(user => {
+    let payload = {
+      id:user.id,
+      auth:user.auth
+    }
+    let token = jwt.sign(payload, settings.jwt.secret)
+    user.token = token
+    console.log("token:", token)
+    //console.log(jwt.decode(token))
+    jwt.verify(token, settings.jwt.secret, (err, decoded) => {
+      if(err) {
+        console.log("err:", err)
+      }
+      else {
+        console.log("decoded:", decoded)
+      }
+    })
+  })
+}
