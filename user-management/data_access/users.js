@@ -19,6 +19,15 @@ function UsersDAO(database) {
     return this.db.collection('users').find({}).toArray()
   }
 
+  /**
+   * Returns a user by id
+   * @param id
+   * @returns {Promise}
+   */
+  this.oneById = function(id) {
+    return this.db.collection('users').find({"id":id}).limit(1).next()
+  }
+
 }
 
 module.exports.UsersDAO = UsersDAO
